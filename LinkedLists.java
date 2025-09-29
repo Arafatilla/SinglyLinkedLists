@@ -283,6 +283,174 @@ public static Node removeK(Node head, int k) {
     }
     
     
+    // Function to detect wether there is a cycle or no in Linked List 
+    // Explination 
+    
+    /*Given the head of a singly linked list, determine whether the list contains a cycle.
+
+A cycle exists if, while traversing the list through next pointers, you encounter a node that has already been visited instead of eventually reaching nullptr.*/
+
+
+    
+   public static Boolean DetectCycle (Node head ){
+    
+    Node temp = head ; 
+    Node curr = head ;
+    
+    if(curr == null || curr.next == null  ){
+        
+        return false ; 
+      
+    }
+    while (temp  != null && temp.next != null){
+        
+        curr = curr.next;
+        temp = temp.next.next ; 
+        
+        if(curr == temp ){
+            return true ;
+        }
+        
+        
+        
+   }
+   return false ; 
+   }
+   
+   
+   // Function to detect the length of a cycle 
+   
+      public static int  CycleLength (Node head ){
+    
+    Node temp = head ; 
+    Node curr = head ;
+    
+    if(curr == null || curr.next == null  ){
+        
+        return 0 ; 
+      
+    }
+    while (temp != null && temp.next != null){
+        
+        curr = curr.next;
+        temp = temp.next.next ; 
+        
+        if(curr == temp ){
+             int i = 1 ; 
+             temp = temp.next  ;
+        while ( temp != curr ){
+            
+            temp = temp.next ; 
+            i++ ; 
+        }
+        return i ; 
+        }
+        
+    
+    }
+          return 0 ; 
+      }
+
+    
+    // Function to Remove duplicates from a sorted linked list
+    
+    public static Node RemoveDuplicates(Node head){
+       
+       Node curr = head ; 
+       while (curr != null &&  curr.next != null ) {
+           
+       if( curr.data == curr.next.data)
+       {
+           curr.next = curr.next.next ; 
+       }
+       else curr = curr.next ; 
+       }
+        return head ;
+    }
+    
+    /*
+    // Function to delete duplicanted from an insorted list 
+    
+    public static Node RemoverDuplicateUnsortedList(Node head ){
+        
+        Node temp  = head ; 
+        int i = 0 ; j = 1  , leng = 0 ;
+        
+        if( temp != null || temp.next == null){
+            return null ; 
+        }
+        // steps to count the linked list length 
+        
+        while(temp != null ){
+            leng++ ; 
+            temp = temp.next ; 
+        }
+        temp = head ; 
+        
+        
+    // inside the while we will move curr and compare each time of temp == curr if it(s true there is always a supp pointer before curr that once we find curr == temp we get ride of the duplicate node which will be curr 
+    
+// here is the implementation fo the idea 
+           curr = temp.next  ;
+           
+       while (temp != null ){
+    
+        
+        for(i = 0 ; i < leng -1 ; i++ ){
+            
+           if(curr != null){
+            
+            if(temp.data == curr.data){
+                curr = curr.next ; 
+                supp.next = curr ;
+                leng-- ; 
+            }else {
+                supp = curr ; 
+                curr = curr.next ; 
+            }
+        }
+        temp = temp.next ; 
+        supp = temp ; 
+        curr = temp.next ; 
+        leng -- ; 
+    }
+    return head ; 
+}
+    }*/
+    
+// Function to remove duplicates from an unsorted linked list
+
+public static Node removeDuplicateUnsorted(Node head) {
+    if (head == null || head.next == null) {
+        return head; 
+    }
+
+    Node temp = head;
+
+    // Outer loop picks elements one by one
+    while (temp != null) {
+        Node supp = temp;
+        Node curr = temp.next;
+
+        // Inner loop checks for duplicates
+        while (curr != null) {
+            if (curr.data == temp.data) {
+                // Duplicate found → remove node
+                supp.next = curr.next;
+                curr = curr.next;
+            } else {
+                supp = curr;
+                curr = curr.next;
+            }
+        }
+
+        temp = temp.next;
+    }
+
+    return head;
+}
+     
+      
     public static void main(String[] args) {
         Node head = new Node(2);
         Node A = new Node(3);
@@ -330,6 +498,14 @@ public static Node removeK(Node head, int k) {
          System.out.println("");
          head = SwapPairs(head);
          DisplayLL(head);
+          System.out.println(DetectCycle(h));
+          System.out.println(DetectCycle(head));
+          
+        System.out.println("");
+        // trying the remove duplicates in the last linked list 
+        head = RemoveDuplicates(head);
+        DisplayLL(head);
+        System.out.println();
          
         
          
@@ -338,3 +514,5 @@ public static Node removeK(Node head, int k) {
     }
     
 }
+
+
