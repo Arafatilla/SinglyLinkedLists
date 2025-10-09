@@ -465,160 +465,59 @@ Explanation: In the below linked list, all nodes with value less than 3 are on t
   
   
   
-     /*public static Node Interesect(Node head , int x ){
-      
-      Node temp = head ; 
-      int i = 0  ;
-       int[] a = new int[leng];
-       int[] b = new int[leng];
-       int[] c = new int[leng];
-      // here we are going to see if the entered int exist in the linked list 
-      
-      while (tmep != null ){
-          if(tem.data == x )
-          i++;
-          temp = temp.next ;
-          leng++;
-      
-          
-      }
-      
-      if(i == 0 ){
-          return null ; 
-      }else{
-          
-          temp = head ;
-          i = 0 ; 
-          int k = 0 , j = 0 ; 
-          while(temp != null){
-              if(temp.data == x){
-                  
-                  a[i] = x ; 
-                  i++;
-              }else (temp.data < x ){
-                  b[j] = temp.data ;
-                  temp = temp.next ;
-                  j++;
-              }else if(temp.data > x){
-                  
-                  c[k] = temp.data ; 
-                  k++ ; 
-              }
-          }
-          
-          int min1 = b[0];
-          int min2 = c[0];
-          
-          for ( i = 0 ; i  < b.length ; i++){
-              
-              for ( j = 0  ; j  < b.length ; j++ )
-              if(b[j]  <  b[i]){
-                  
-                  int m = b[j];
-                  b[j] = b[i];
-                  b[j] = m ; 
-                  
-                  
-              }
-             
-              for ( i = 0 ; i  < c.length ; i++){
-              
-              for ( j = 0  ; j  < c.length ; j++ )
-              if(c[j]  <  c[i]){
-                  
-                  int m = c[j];
-                  c[j] = c[i];
-                  c[j] = m ; 
-                  
-                  
-              
-                  
-              }
-                  
-              }
-              
-          }
-              
-              temp = head ; 
-              j = 0 ; 
-              while(leng != 0  ){
-                  
-                      
-                      temp.data = b[j];
-                      j++,
-                      leng--;
-                  
-                  
-              }
-              temp = head ;
-              i = 0 ; 
-              while(leng != 0  ){
-                 
-                      
-                      temp.data = a[i];
-                      i++,
-                      leng--;
-                  
-                  
-              }
-              temp = head ;
-              k = 0 ; 
-              while(leng != 0  ){
-                 
-                      
-                      temp.data = c[k];
-                      k++,
-                      leng--;
-                  
-                  
-              }
-          
-         
-      }
-  }   
-     */ 
-      
-      
-      
-       public static Node partition(Node head, int x) {
-        if (head == null) return null;
+     public static Node Intersection(Node head, int x) {
+    if (head == null || head.next == null) return head;
 
-        // Dynamic arrays (ArrayLists)
-        List<Integer> less = new ArrayList<>();
-        List<Integer> equal = new ArrayList<>();
-        List<Integer> greater = new ArrayList<>();
+    Node temp = head;
 
-       
-        Node temp = head;
-        while (temp != null) {
-            if (temp.data < x) {
-                less.add(temp.data);
-            } else if (temp.data == x) {
-                equal.add(temp.data);
-            } else {
-                greater.add(temp.data);
-            }
-            temp = temp.next;
-        }
+    
+    Node equalhead = new Node(0);
+    Node lesshead = new Node(0);
+    Node greathead = new Node(0);
 
-        
-        temp = head;
-        for (int val : less) {
-            temp.data = val;
-            temp = temp.next;
-        }
-        for (int val : equal) {
-            temp.data = val;
-            temp = temp.next;
-        }
-        for (int val : greater) {
-            temp.data = val;
-            temp = temp.next;
-        }
+    
+    Node equal = equalhead;
+    Node less = lesshead;
+    Node great = greathead;
 
-        return head;
+
+    while (temp != null) {
+        if (temp.data == x) {
+            equal.next = temp;
+            equal = equal.next;
+        } else if (temp.data < x) {
+            less.next = temp;
+            less = less.next;
+        } else {
+            great.next = temp;
+            great = great.next;
+        }
+        temp = temp.next;
     }
 
+    
+    great.next = null;
+
+
+    if (lesshead.next != null) {
+        less.next = (equalhead.next != null) ? equalhead.next : greathead.next;
+    }
+    if (equalhead.next != null) {
+        equal.next = greathead.next;
+    }
+
+    
+    if (lesshead.next != null) {
+        return lesshead.next;
+    } else if (equalhead.next != null) {
+        return equalhead.next;
+    } else {
+        return greathead.next;
+    }
+}
+ 
+      
+      
       
       
     public static void main(String[] args) {
